@@ -307,23 +307,23 @@ func (sl *StringLiteral) expressionNode()      {}
 func (sl *StringLiteral) TokenLiteral() string { return sl.Token.Literal }
 func (sl *StringLiteral) String() string       { return sl.Token.Literal }
 
-type AssignExpression struct {
-	Token token.Token // The = token
-	Name  Expression  // Name of the variable being assigned
-	Value Expression  // Value to be assigned
-}
-
-func (ae *AssignExpression) statementNode()       {}
-func (ae *AssignExpression) expressionNode()      {}
-func (ae *AssignExpression) TokenLiteral() string { return ae.Token.Literal }
-func (ae *AssignExpression) String() string {
-	var out bytes.Buffer
-
-	out.WriteString(ae.Name.String())
-	out.WriteString(" = ")
-	if ae.Value != nil {
-		out.WriteString(ae.Value.String())
-	}
-
-	return out.String()
-}
+//type AssignExpression struct {
+//	Token token.Token // The = token
+//	Name  Expression  // Name of the variable being assigned
+//	Value Expression  // Value to be assigned
+//}
+//
+//func (ae *AssignExpression) statementNode()       {}
+//func (ae *AssignExpression) expressionNode()      {}
+//func (ae *AssignExpression) TokenLiteral() string { return ae.Token.Literal }
+//func (ae *AssignExpression) String() string {
+//	var out bytes.Buffer
+//
+//	out.WriteString(ae.Name.String())
+//	out.WriteString(" = ")
+//	if ae.Value != nil {
+//		out.WriteString(ae.Value.String())
+//	}
+//
+//	return out.String()
+//}

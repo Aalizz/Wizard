@@ -76,7 +76,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.NOT_EQ, p.parseInfixExpression)
 	p.registerInfix(token.LT, p.parseInfixExpression)
 	p.registerInfix(token.GT, p.parseInfixExpression)
-	p.registerInfix(token.ASSIGN, p.parseAssignExpression)
+	//p.registerInfix(token.ASSIGN, p.parseAssignExpression)
 
 	p.registerInfix(token.LPAREN, p.parseCallExpression)
 
@@ -308,25 +308,25 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 	return expression
 }
 
-func (p *Parser) parseAssignExpression(left ast.Expression) ast.Expression {
-	expression := &ast.AssignExpression{Token: p.curToken,
-		Name: left,
-	}
-	//if !p.expectPeek(token.ID) {
-	//	return nil
-	//}
-	//expression.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
-
-	if !p.expectPeek(token.ASSIGN) {
-		return nil
-	}
-
-	p.nextToken()
-
-	expression.Value = p.parseExpression(LOWEST)
-
-	return expression
-}
+//func (p *Parser) parseAssignExpression(left ast.Expression) ast.Expression {
+//	expression := &ast.AssignExpression{Token: p.curToken,
+//		Name: left,
+//	}
+//	//if !p.expectPeek(token.ID) {
+//	//	return nil
+//	//}
+//	//expression.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+//
+//	if !p.expectPeek(token.ASSIGN) {
+//		return nil
+//	}
+//
+//	p.nextToken()
+//
+//	expression.Value = p.parseExpression(LOWEST)
+//
+//	return expression
+//}
 
 func (p *Parser) parseBoolean() ast.Expression {
 	return &ast.Boolean{Token: p.curToken, Value: p.curTokenIs(token.TRUE)}
