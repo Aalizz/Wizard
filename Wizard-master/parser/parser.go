@@ -490,7 +490,7 @@ func (p *Parser) parserForExpression() ast.Expression { //处理for循环
 	if !p.peekTokenIs(token.COLON) { //匹配冒号
 		//如果匹配失败，则初始化
 		p.nextToken() //跳过for
-		exp.Initialize = p.parseExpression(LOWEST)
+		exp.Initialize = p.parseLetStatement()
 		if !p.expectPeek(token.COLON) { //继续匹配冒号
 			return nil
 		}
