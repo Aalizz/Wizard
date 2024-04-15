@@ -285,9 +285,9 @@ func (ce *CallExpression) String() string {
 
 type ForExpression struct { //For的抽象语法树
 	Token      token.Token
-	Initialize Expression //可以为空
+	Initialize Statement //可以为空
 	Condition  Expression
-	Cycleop    Expression
+	Cycleop    Statement
 	Body       *BlockStatement
 }
 
