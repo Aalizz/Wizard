@@ -488,27 +488,29 @@ func (p *Parser) parserForExpression() ast.Expression { //处理for循环
 	exp := &ast.ForExpression{Token: p.curToken} //for
 
 	if !p.peekTokenIs(token.COLON) { //匹配冒号
-		//如果匹配失败，则判断是否是初始化语句
+		//如果匹配失败，则初始化
+		p.nextToken() //跳过for
 		exp.Initialize = p.parseExpression(LOWEST)
-		if !p.expectPeek(token.COLON) {
+		if !p.expectPeek(token.COLON) { //继续匹配冒号
 			return nil
 		}
 	} else {
 		exp.Initialize = nil
-		p.nextToken()
+		p.nextToken() //跳过for
 	}
+	p.nextToken() //跳过':'
 
 	exp.Condition = p.parseExpression(LOWEST)
 
 	if !p.expectPeek(token.COLON) {
 		return nil
 	}
-
-	exp.Cycleop = p.parseExpression(LOWEST)
+	p.nextToken()
+	exp.Cycleop = p.parseLetStatement()
 	if !p.expectPeek(token.LBRACE) {
 		return nil
 	}
-
+	p.nextToken()
 	exp.Body = p.parseBlockStatement()
 
 	return exp
