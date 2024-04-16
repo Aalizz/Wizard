@@ -74,6 +74,7 @@ var keywords = map[string]TokenType{
 
 // LookupId 查找关键字，如果不是关键字则返回ID
 func LookupId(id string) TokenType {
+	keywords := keywords
 	if tok, ok := keywords[id]; ok {
 		return tok
 	}
