@@ -337,23 +337,42 @@ func (sl *StringLiteral) expressionNode()      {}
 func (sl *StringLiteral) TokenLiteral() string { return sl.Token.Literal }
 func (sl *StringLiteral) String() string       { return sl.Token.Literal }
 
-//type AssignExpression struct {
-//	Token token.Token // The = token
-//	Name  Expression  // Name of the variable being assigned
-//	Value Expression  // Value to be assigned
-//}
-//
-//func (ae *AssignExpression) statementNode()       {}
-//func (ae *AssignExpression) expressionNode()      {}
-//func (ae *AssignExpression) TokenLiteral() string { return ae.Token.Literal }
-//func (ae *AssignExpression) String() string {
-//	var out bytes.Buffer
-//
-//	out.WriteString(ae.Name.String())
-//	out.WriteString(" = ")
-//	if ae.Value != nil {
-//		out.WriteString(ae.Value.String())
-//	}
-//
-//	return out.String()
-//}
+// ArrayLiteral 数组实现
+type ArrayLiteral struct {
+	Token    token.Token // '['词法单元
+	Elements []Expression
+}
+
+func (al *ArrayLiteral) expressionNode()      {}
+func (al *ArrayLiteral) TokenLiteral() string { return al.Token.Literal }
+func (al *ArrayLiteral) String() string {
+	var out bytes.Buffer
+	elements := []string{}
+	for _, el := range al.Elements {
+		elements = append(elements, el.String())
+	}
+	out.WriteString("[")
+	out.WriteString(strings.Join(elements, ", "))
+	out.WriteString("]")
+	return out.String()
+}
+
+type IndexExpression struct {
+	Token token.Token // The [ token
+	Left  Expression
+	Index Expression
+}
+
+func (ie *IndexExpression) expressionNode()      {}
+func (ie *IndexExpression) TokenLiteral() string { return ie.Token.Literal }
+func (ie *IndexExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("(")
+	out.WriteString(ie.Left.String())
+	out.WriteString("[")
+	out.WriteString(ie.Index.String())
+	out.WriteString("])")
+
+	return out.String()
+}
