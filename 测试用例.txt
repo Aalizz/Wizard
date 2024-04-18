@@ -59,6 +59,8 @@ let i=i-2;
 }
 }
 
-
 ling(5);
 
+// 数组测试
+let double = fn(x) { x * 2 };
+[1, double(2), 3 * 3, 4 - 3]
