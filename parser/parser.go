@@ -494,7 +494,7 @@ func (p *Parser) parserForExpression() ast.Expression { //处理for循环
 	if !p.expectPeek(token.LBRACE) {
 		return nil
 	}
-	p.nextToken()
+
 	exp.Body = p.parseBlockStatement()
 
 	return exp
