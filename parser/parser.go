@@ -84,7 +84,7 @@ func New(l *lexer.Lexer) *Parser { //返回一个parser结构体
 	p.registerInfix(token.LT, p.parseInfixExpression)
 	p.registerInfix(token.GT, p.parseInfixExpression)
 	p.registerInfix(token.LE, p.parseInfixExpression)
-	p.registerInfix(token.GT, p.parseInfixExpression)
+	p.registerInfix(token.GE, p.parseInfixExpression)
 	//p.registerInfix(token.ASSIGN, p.parseAssignExpression)
 
 	p.registerInfix(token.LPAREN, p.parseCallExpression)
@@ -495,7 +495,7 @@ func (p *Parser) parserForExpression() ast.Expression { //处理for循环
 	if !p.expectPeek(token.LBRACE) {
 		return nil
 	}
-	p.nextToken()
+
 	exp.Body = p.parseBlockStatement()
 
 	return exp
