@@ -7,4 +7,5 @@
 * token:     定义Token结构体，Token类型，关键字;提供了匹配关键字的函数，
 * parser:    nextToken调用lexer生成Token;使用pratte算法定义优先级;提供了生成抽象语法树的函数
 * ast:       定义了抽象语法树的结构体，接口和方法
-* evaluator: 
+* evaluator: Eval()求值，定义了不同语法树的求值方法
+* object:    定义了返回值的类型和方法

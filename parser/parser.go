@@ -90,6 +90,7 @@ func New(l *lexer.Lexer) *Parser { //返回一个parser结构体
 	p.registerInfix(token.LPAREN, p.parseCallExpression)
 	p.registerPrefix(token.LBRACKET, p.parseArrayLiteral)
 	p.registerInfix(token.LBRACKET, p.parseIndexExpression)
+	p.registerPrefix(token.LBRACE, p.parseHashLiteral)
 
 	// Read two tokens, so curToken and peekToken are both set
 	p.nextToken()
@@ -494,7 +495,7 @@ func (p *Parser) parserForExpression() ast.Expression { //处理for循环
 	if !p.expectPeek(token.LBRACE) {
 		return nil
 	}
-	p.nextToken()
+
 	exp.Body = p.parseBlockStatement()
 
 	return exp
@@ -562,4 +563,33 @@ func (p *Parser) parseIndexExpression(left ast.Expression) ast.Expression {
 	}
 
 	return exp
+}
+
+func (p *Parser) parseHashLiteral() ast.Expression {
+	hash := &ast.HashLiteral{Token: p.curToken}
+	hash.Pairs = make(map[ast.Expression]ast.Expression)
+
+	for !p.peekTokenIs(token.RBRACE) {
+		p.nextToken()
+		key := p.parseExpression(LOWEST)
+
+		if !p.expectPeek(token.COLON) {
+			return nil
+		}
+
+		p.nextToken()
+		value := p.parseExpression(LOWEST)
+
+		hash.Pairs[key] = value
+
+		if !p.peekTokenIs(token.RBRACE) && !p.expectPeek(token.COMMA) {
+			return nil
+		}
+	}
+
+	if !p.expectPeek(token.RBRACE) {
+		return nil
+	}
+
+	return hash
 }
